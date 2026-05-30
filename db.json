@@ -1,0 +1,35 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Usuário Teste",
+      "email": "teste@venda.me",
+      "password": "123",
+      "avatar": "https://github.com/identicons/user.png"
+    }
+  ],
+  "categories": [
+    { "id": "1", "label": "Automóveis", "slug": "automoveis" },
+    { "id": "2", "label": "Eletrônicos", "slug": "eletronicos" },
+    { "id": "3", "label": "Moda", "slug": "moda" },
+    { "id": "4", "label": "Esportes", "slug": "esportes" }
+  ],
+  "products": [
+    {
+      "id": "101",
+      "userId": "1",
+      "title": "iPhone 15 Pro Max",
+      "price": 7500.0,
+      "description": "Aparelho impecável, 256GB, com nota fiscal.",
+      "images": [
+        "https://picsum.photos/seed/iphone1/400/300",
+        "https://picsum.photos/seed/iphone2/400/300"
+      ],
+      "brand": "Apple",
+      "categoryId": "2",
+      "condition": "usado",
+      "shipping": false,
+      "createdAt": "2026-05-12T10:00:00Z"
+    }
+  ]
+}
