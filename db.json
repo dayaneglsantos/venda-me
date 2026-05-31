@@ -4,7 +4,7 @@
       "id": "1",
       "name": "Usuário Teste",
       "email": "teste@venda.me",
-      "password": "123",
+      "password": "senha123",
       "avatar": "https://github.com/identicons/user.png"
     }
   ],
