@@ -64,12 +64,22 @@ export default function Menu() {
             {user ? (
               <>
                 <li>
-                  <Button variant="outline" startIcon={<FiHome />} size="sm">
+                  <Button
+                    variant="outline"
+                    startIcon={<FiHome />}
+                    size="sm"
+                    onClick={() => navigate("/")}
+                  >
                     Início
                   </Button>
                 </li>
                 <li>
-                  <Button variant="outline" startIcon={<FiList />} size="sm">
+                  <Button
+                    variant="outline"
+                    startIcon={<FiList />}
+                    size="sm"
+                    onClick={() => navigate("/meus-anuncios")}
+                  >
                     Meus anúncios
                   </Button>
                 </li>
