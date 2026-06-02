@@ -1,19 +1,36 @@
+import type { ProductType } from "../types/productType";
 import Button from "./Button";
 
-export default function ProductCard() {
+interface ProductCardProps {
+  product: ProductType;
+}
+
+export default function ProductCard({ product }: ProductCardProps) {
   return (
-    <div className="shadow-md rounded-lg p-3 bg-white">
+    <div className="flex flex-col justify-between shadow-md rounded-lg p-3 bg-white">
       <img
-        src="https://via.placeholder.com/300x200"
+        src={product.images[0]}
         alt="Produto"
         className="w-full h-48 object-cover rounded-md mb-3"
       />
-      <h2 className="text-lg font-semibold mb-1">Título do Produto</h2>
-      <p className="text-gray-600 mb-2">
-        Descrição breve do produto para atrair o interesse dos compradores.
-      </p>
-      <p className="text-green-600 font-bold text-xl mb-3">R$ 99,99</p>
-      <Button>Ver Detalhes</Button>
+      <div>
+        <h2 className="text-lg font-semibold mb-1">{product.title}</h2>
+        <p className="text-gray-600 mb-2 line-clamp-2">{product.description}</p>
+        <p className="text-gray-600 mb-2 line-clamp-2">
+          {product.user?.city}, {product.user?.state}
+        </p>
+        <div className="flex items-center justify-between">
+          <p className="text-primary-dark font-bold text-xl mb-3">
+            R$ {product.price.toFixed(2).replace(".", ",")}
+          </p>
+          <span className="text-xs p-1 bg-gray-200 text-gray-800">
+            {product.condition === "novo" ? "Novo" : "Usado"}
+          </span>
+        </div>
+      </div>
+      <Button className="w-full" size="sm" variant="outline">
+        Ver Detalhes
+      </Button>
     </div>
   );
 }

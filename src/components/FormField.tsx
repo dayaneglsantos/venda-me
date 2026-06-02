@@ -57,10 +57,10 @@ export function FormField({
   const shouldUseMask = !!mask || !!maskOptions;
 
   return (
-    <div className={`form-field flex flex-col w-full mt-2 ${className}`}>
-      {label && (
-        <label className="text-gray-500 text-sm font-bold mb-1">{label}</label>
-      )}
+    <div
+      className={`form-field flex flex-col w-full mt-2 text-sm ${className}`}
+    >
+      {label && <label className="text-gray-500 font-bold mb-1">{label}</label>}
 
       <div className="relative w-full flex items-center">
         {shouldUseMask ? (

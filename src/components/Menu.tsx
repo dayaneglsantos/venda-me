@@ -85,7 +85,7 @@ export default function Menu() {
                 </li>
                 <li>
                   <Button
-                    variant="outline"
+                    variant="primary"
                     startIcon={<FiPlus />}
                     onClick={() => navigate("/anunciar")}
                     size="sm"
@@ -157,7 +157,7 @@ export default function Menu() {
                 </li>
                 <li>
                   <Button
-                    variant="outline"
+                    variant="primary"
                     onClick={() => {
                       navigate("/anunciar");
                       setIsMenuOpen(false);

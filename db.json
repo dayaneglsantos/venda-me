@@ -3,9 +3,11 @@
     {
       "id": "1",
       "name": "Usuário Teste",
-      "email": "teste@venda.me",
+      "email": "admin@venda.me",
       "password": "senha123",
-      "avatar": "https://github.com/identicons/user.png"
+      "avatar": "https://github.com/identicons/user.png",
+      "state": "SP",
+      "city": "São Paulo"
     }
   ],
   "categories": [
@@ -28,6 +30,36 @@
       "id": "4",
       "label": "Esportes",
       "slug": "esportes"
+    },
+    {
+      "id": "5",
+      "label": "Casa e Jardim",
+      "slug": "casa-e-jardim"
+    },
+    {
+      "id": "6",
+      "label": "Brinquedos",
+      "slug": "brinquedos"
+    },
+    {
+      "id": "7",
+      "label": "Saúde e Beleza",
+      "slug": "saude-e-beleza"
+    },
+    {
+      "id": "8",
+      "label": "Música e Instrumentos",
+      "slug": "musica-e-instrumentos"
+    },
+    {
+      "id": "9",
+      "label": "Móveis e Decoração",
+      "slug": "moveis-e-decoracao"
+    },
+    {
+      "id": "10",
+      "label": "Outros",
+      "slug": "outros"
     }
   ],
   "products": [
@@ -45,6 +77,41 @@
       "categoryId": "2",
       "condition": "usado",
       "shipping": false,
+      "status": "available",
+      "createdAt": "2026-05-12T10:00:00Z"
+    },
+    {
+      "id": "102",
+      "userId": "1",
+      "title": "Notebook Dell XPS 15",
+      "price": 350,
+      "description": "Memória RAM de 16GB, SSD de 512GB, perfeito para trabalho e estudos.",
+      "images": [
+        "https://picsum.photos/seed/iphone1/400/300",
+        "https://picsum.photos/seed/iphone2/400/300"
+      ],
+      "brand": "Apple",
+      "categoryId": "2",
+      "condition": "novo",
+      "shipping": false,
+      "status": "sold",
+      "createdAt": "2026-05-12T10:00:00Z"
+    },
+    {
+      "id": "103",
+      "userId": "1",
+      "title": "Argo Trekking 2020",
+      "price": 120.23,
+      "description": "Motor 1.0, completa, com baixa quilometragem e em ótimo estado de conservação. Perfeita para quem busca um carro econômico e versátil para o dia a dia.",
+      "images": [
+        "https://picsum.photos/seed/iphone1/400/300",
+        "https://picsum.photos/seed/iphone2/400/300"
+      ],
+      "brand": "Apple",
+      "categoryId": "2",
+      "condition": "usado",
+      "shipping": false,
+      "status": "paused",
       "createdAt": "2026-05-12T10:00:00Z"
     }
   ],

@@ -1,3 +1,5 @@
+import type { UserType } from "./userType";
+
 export interface ProductType {
   id: string;
   userId: number;
@@ -10,4 +12,5 @@ export interface ProductType {
   condition: "novo" | "usado";
   shipping: boolean;
   createdAt: string;
+  user?: UserType;
 }

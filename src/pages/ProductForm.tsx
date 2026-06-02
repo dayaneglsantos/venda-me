@@ -122,7 +122,7 @@ export default function ProductForm() {
     try {
       const payload = {
         id: crypto.randomUUID(),
-        userId: user?.id || "1",
+        userId: user?.id,
         title: formValues.title,
         price: formValues.price,
         description: formValues.description,

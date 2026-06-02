@@ -1,3 +1,4 @@
+import type { UserType } from "../types/userType";
 import { api } from "./api";
 
 interface ProductFilters {
@@ -5,6 +6,7 @@ interface ProductFilters {
   pageSize: number;
   category?: string;
   search?: string;
+  state?: string;
 }
 
 export const productsList = async (filters: ProductFilters) => {
@@ -12,6 +14,7 @@ export const productsList = async (filters: ProductFilters) => {
     const params: any = {
       _page: filters.pageNumber,
       _per_page: filters.pageSize,
+      // _expand: "user",
     };
 
     if (filters.category) {
@@ -21,6 +24,9 @@ export const productsList = async (filters: ProductFilters) => {
     if (filters.search) {
       params.q = filters.search;
     }
+    // if (filters.state) {
+    //   params.state = filters.state;
+    // }
 
     const { data } = await api.get("/products", { params });
 
@@ -41,6 +47,32 @@ export const createProduct = async (productData: any) => {
     console.log(error);
     return {
       error: "Ocorreu um erro ao criar o produto",
+    };
+  }
+};
+
+export const myProductsMeta = async (user: UserType) => {
+  try {
+    const { data } = await api.get(`/products?userId=${user.id}`);
+
+    const totalProducts = data.length;
+    const soldProducts = data.filter(
+      (product: any) => product.status === "sold",
+    ).length;
+    const pausedProducts = data.filter(
+      (product: any) => product.status === "paused",
+    ).length;
+    const activeProducts = data.filter(
+      (product: any) => product.status === "available",
+    ).length;
+
+    return {
+      data: { totalProducts, soldProducts, pausedProducts, activeProducts },
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      error: "Ocorreu um erro ao carregar os produtos",
     };
   }
 };
