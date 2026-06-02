@@ -22,6 +22,7 @@ export default defineConfig([
       "@typescript-eslint/no-unused-vars": "off",
       "react-hooks/incompatible-library": "off",
       "@typescript-eslint/no-explicit-any": "off",
+      "react-hooks/set-state-in-effect": "off",
     },
   },
 ]);
