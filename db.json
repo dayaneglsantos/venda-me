@@ -9,17 +9,33 @@
     }
   ],
   "categories": [
-    { "id": "1", "label": "Automóveis", "slug": "automoveis" },
-    { "id": "2", "label": "Eletrônicos", "slug": "eletronicos" },
-    { "id": "3", "label": "Moda", "slug": "moda" },
-    { "id": "4", "label": "Esportes", "slug": "esportes" }
+    {
+      "id": "1",
+      "label": "Automóveis",
+      "slug": "automoveis"
+    },
+    {
+      "id": "2",
+      "label": "Eletrônicos",
+      "slug": "eletronicos"
+    },
+    {
+      "id": "3",
+      "label": "Moda",
+      "slug": "moda"
+    },
+    {
+      "id": "4",
+      "label": "Esportes",
+      "slug": "esportes"
+    }
   ],
   "products": [
     {
       "id": "101",
       "userId": "1",
       "title": "iPhone 15 Pro Max",
-      "price": 7500.0,
+      "price": 7500,
       "description": "Aparelho impecável, 256GB, com nota fiscal.",
       "images": [
         "https://picsum.photos/seed/iphone1/400/300",
@@ -31,5 +47,6 @@
       "shipping": false,
       "createdAt": "2026-05-12T10:00:00Z"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

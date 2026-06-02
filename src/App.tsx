@@ -3,6 +3,7 @@ import Login from "./pages/Login";
 import { Layout } from "./layouts/Layout";
 import { Toaster } from "react-hot-toast";
 import { PrivateRoute } from "./components/PrivateRoute";
+import ProductForm from "./pages/ProductForm";
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
               path="/inicio"
               element={<h1>Página inicial - usuário logado</h1>}
             />
-            <Route path="/anunciar" element={<h1>Formulário de Anúncio</h1>} />
+            <Route path="/anunciar" element={<ProductForm />} />
             <Route path="/meus-anuncios" element={<h1>Meus Anúncios</h1>} />
           </Route>
         </Route>
