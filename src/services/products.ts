@@ -14,25 +14,39 @@ export const productsList = async (filters: ProductFilters) => {
     const params: any = {
       _page: filters.pageNumber,
       _per_page: filters.pageSize,
-      // _expand: "user",
+      _sort: "-createdAt",
+      _embed: "user",
     };
 
+    const where: Record<string, any> = {};
+
     if (filters.category) {
-      params.categoryId = filters.category;
+      where.categoryId = {
+        eq: filters.category,
+      };
+    }
+
+    if (filters.state) {
+      where.user = {
+        state: {
+          eq: filters.state,
+        },
+      };
     }
 
     if (filters.search) {
-      params.q = filters.search;
+      where.title = {
+        contains: filters.search,
+      };
     }
-    // if (filters.state) {
-    //   params.state = filters.state;
-    // }
+
+    params._where = JSON.stringify(where);
 
     const { data } = await api.get("/products", { params });
 
     return { data };
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return {
       error: "Ocorreu um erro ao carregar os produtos",
     };
@@ -44,7 +58,7 @@ export const createProduct = async (productData: any) => {
     const { data } = await api.post("/products", productData);
     return { data };
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return {
       error: "Ocorreu um erro ao criar o produto",
     };
@@ -70,7 +84,7 @@ export const myProductsMeta = async (user: UserType) => {
       data: { totalProducts, soldProducts, pausedProducts, activeProducts },
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return {
       error: "Ocorreu um erro ao carregar os produtos",
     };

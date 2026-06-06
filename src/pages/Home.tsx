@@ -108,10 +108,15 @@ export default function Home() {
     { label: "Tocantins", value: "TO" },
   ];
 
+  const categoriesOptions = categories?.map((cat: any) => ({
+    label: cat.label,
+    value: cat.id,
+  }));
+
   console.log(products);
 
   return (
-    <div className="p-6 pt-3">
+    <div className="p-6 pt-3 max-w-7xl mx-auto">
       <div className="flex gap-3 mb-6 items-center">
         <FormField
           label="Pesquisar por título"
@@ -132,7 +137,7 @@ export default function Home() {
           className="w-48"
         />
         <SelectInput
-          options={categories}
+          options={categoriesOptions}
           label="Filtrar por categoria"
           value={filters.category}
           onChange={(value) => {
@@ -171,12 +176,12 @@ export default function Home() {
 
       <div>
         {isLoading && <p>carregando....</p>}
-        {!isLoading && products.length === 0 && (
+        {!isLoading && products?.length === 0 && (
           <p>Nenhum produto encontrado.</p>
         )}
-        {!isLoading && products.length > 0 && (
+        {!isLoading && products?.length > 0 && (
           <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-            {products.map((product) => (
+            {products?.map((product) => (
               <ProductCard product={product} />
             ))}
           </div>

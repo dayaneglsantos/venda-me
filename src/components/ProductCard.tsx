@@ -1,5 +1,6 @@
 import type { ProductType } from "../types/productType";
 import Button from "./Button";
+import dayjs from "dayjs";
 
 interface ProductCardProps {
   product: ProductType;
@@ -28,6 +29,9 @@ export default function ProductCard({ product }: ProductCardProps) {
           </span>
         </div>
       </div>
+      <p className="text-sm text-gray-500 mb-2">
+        {dayjs(product.createdAt).format("DD/MM/YYYY HH:mm")}
+      </p>
       <Button className="w-full" size="sm" variant="outline">
         Ver Detalhes
       </Button>
