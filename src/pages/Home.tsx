@@ -8,13 +8,15 @@ import { categoriesList } from "../services/categories";
 import toast from "react-hot-toast";
 import ProductCard from "../components/ProductCard";
 import { myProductsMeta, productsList } from "../services/products";
+import EmptyContent from "../components/EmptyContent";
+import Loader from "../components/Loader";
 
 export default function Home() {
   const { user } = useAuthStore();
 
   const [filters, setFilters] = useState({
     pageNumber: 1,
-    pageSize: 10,
+    pageSize: 9,
     search: "",
     state: "",
     category: "",
@@ -22,6 +24,12 @@ export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
+  const [meta, setMeta] = useState<any>({
+    pages: 0,
+    prev: false,
+    next: false,
+    totalPages: 0,
+  });
   const [kpiData, setKpiData] = useState<any | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -37,8 +45,9 @@ export default function Home() {
   const getProducts = async () => {
     setIsLoading(true);
     try {
-      const { data } = await productsList(filters);
+      const { data, meta } = await productsList(filters);
       setProducts(data.data);
+      setMeta(meta ?? { prev: false, next: false, totalPages: 0, pages: 0 });
     } catch (error) {
       toast.error("Ocorreu um erro ao carregar os produtos");
     } finally {
@@ -113,10 +122,32 @@ export default function Home() {
     value: cat.id,
   }));
 
-  console.log(products);
+  const pages = Array.from({ length: meta.pages }, (_, index) => index + 1);
+
+  const getVisiblePages = () => {
+    const totalPages = meta.pages;
+    const currentPage = filters.pageNumber;
+    const maxVisiblePages = 5;
+
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+
+    let endPage = startPage + maxVisiblePages - 1;
+
+    if (endPage > totalPages) {
+      endPage = totalPages;
+      startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+
+    return Array.from(
+      { length: endPage - startPage + 1 },
+      (_, index) => startPage + index,
+    );
+  };
+
+  const visiblePages = getVisiblePages();
 
   return (
-    <div className="p-6 pt-3 max-w-7xl mx-auto">
+    <div className="p-6 pt-3 max-w-7xl mx-auto w-full flex flex-col flex-1">
       <div className="flex gap-3 mb-6 items-center">
         <FormField
           label="Pesquisar por título"
@@ -153,7 +184,7 @@ export default function Home() {
             setSearchTerm("");
             setFilters({
               pageNumber: 1,
-              pageSize: 10,
+              pageSize: 9,
               search: "",
               state: "",
               category: "",
@@ -174,16 +205,67 @@ export default function Home() {
         )}
       </div>
 
-      <div>
-        {isLoading && <p>carregando....</p>}
+      <div className="flex-1">
+        {isLoading && <Loader />}
         {!isLoading && products?.length === 0 && (
-          <p>Nenhum produto encontrado.</p>
+          <EmptyContent
+            title="Nenhum anúncio encontrado"
+            description="Tente ajustar os filtros ou buscar por outro termo."
+            className="flex-1"
+          />
         )}
         {!isLoading && products?.length > 0 && (
-          <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-            {products?.map((product) => (
-              <ProductCard product={product} />
-            ))}
+          <div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+              {products?.map((product) => (
+                <ProductCard product={product} />
+              ))}
+            </div>
+            <div className="flex justify-center items-center gap-2 mt-6">
+              <Button
+                size="sm"
+                variant="outline"
+                disabled={filters.pageNumber === 1}
+                onClick={() =>
+                  setFilters((prev) => ({
+                    ...prev,
+                    pageNumber: prev.pageNumber - 1,
+                  }))
+                }
+              >
+                Anterior
+              </Button>
+
+              {visiblePages.map((page) => (
+                <Button
+                  key={page}
+                  size="sm"
+                  variant={page === filters.pageNumber ? "primary" : "outline"}
+                  onClick={() =>
+                    setFilters((prev) => ({
+                      ...prev,
+                      pageNumber: page,
+                    }))
+                  }
+                >
+                  {page}
+                </Button>
+              ))}
+
+              <Button
+                size="sm"
+                variant="outline"
+                disabled={filters.pageNumber === meta.pages}
+                onClick={() =>
+                  setFilters((prev) => ({
+                    ...prev,
+                    pageNumber: prev.pageNumber + 1,
+                  }))
+                }
+              >
+                Próxima
+              </Button>
+            </div>
           </div>
         )}
       </div>

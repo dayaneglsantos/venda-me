@@ -45,7 +45,7 @@ export default function Login() {
 
       if (response?.data) {
         login(response.data);
-        navigate("/inicio");
+        navigate("/");
       } else if (response?.error) {
         toast.error(response?.error);
       }
@@ -57,7 +57,7 @@ export default function Login() {
 
   useEffect(() => {
     if (isLogged) {
-      navigate("/inicio");
+      navigate("/");
     }
   }, [isLogged]);
 

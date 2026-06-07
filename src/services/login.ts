@@ -21,7 +21,7 @@ export const login = async (email: string, password: string) => {
       return { data: user };
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return {
       error: "Ocorreu um erro ao realizar login",
     };

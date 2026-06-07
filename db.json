@@ -79,8 +79,8 @@
       "price": 7500,
       "description": "Aparelho impecável, 256GB, com nota fiscal.",
       "images": [
-        "https://picsum.photos/seed/iphone1/400/300",
-        "https://picsum.photos/seed/iphone2/400/300"
+        "https://picsum.photos/400/300",
+        "https://picsum.photos/400/300"
       ],
       "brand": "Apple",
       "categoryId": "1",
@@ -96,8 +96,8 @@
       "price": 350,
       "description": "Memória RAM de 16GB, SSD de 512GB, perfeito para trabalho e estudos.",
       "images": [
-        "https://picsum.photos/seed/iphone1/400/300",
-        "https://picsum.photos/seed/iphone2/400/300"
+        "https://picsum.photos/400/300",
+        "https://picsum.photos/400/300"
       ],
       "brand": "Apple",
       "categoryId": "11",
@@ -113,8 +113,8 @@
       "price": 120.23,
       "description": "Motor 1.0, completa, com baixa quilometragem e em ótimo estado de conservação. Perfeita para quem busca um carro econômico e versátil para o dia a dia.",
       "images": [
-        "https://picsum.photos/seed/iphone1/400/300",
-        "https://picsum.photos/seed/iphone2/400/300"
+        "https://picsum.photos/400/300",
+        "https://picsum.photos/400/300"
       ],
       "brand": "Apple",
       "categoryId": "3",
@@ -122,6 +122,159 @@
       "shipping": false,
       "status": "paused",
       "createdAt": "2026-05-25T03:12:00Z"
+    },
+    {
+      "id": "104",
+      "userId": "2",
+      "title": "Bicicleta Caloi 100",
+      "price": 500,
+      "description": "Bicicleta aro 29, com quadro de alumínio, ideal para trilhas e passeios urbanos. Em ótimo estado de conservação, com poucos usos.",
+      "images": [
+        "https://picsum.photos/400/300",
+        "https://picsum.photos/400/300"
+      ],
+      "brand": "Apple",
+      "categoryId": "4",
+      "condition": "usado",
+      "shipping": false,
+      "status": "available",
+      "createdAt": "2026-05-28T14:45:00Z"
+    },
+    {
+      "id": "105",
+      "userId": "1",
+      "title": "Câmera Canon EOS Rebel T7",
+      "price": 800,
+      "description": "Câmera DSLR com sensor de 24.1MP, perfeita para fotografia amadora e entusiastas. Inclui lente kit 18-55mm, cartão de memória de 16GB e bolsa de transporte. Em excelente estado de conservação, com poucos usos.",
+      "images": [
+        "https://picsum.photos/400/300",
+        "https://picsum.photos/400/300"
+      ],
+      "brand": "Apple",
+      "categoryId": "2",
+      "condition": "usado",
+      "shipping": false,
+      "status": "available",
+      "createdAt": "2026-05-30T09:15:00Z"
+    },
+    {
+      "id": "106",
+      "userId": "2",
+      "title": "Tênis Nike Air Max 270",
+      "price": 300,
+      "description": "Tênis esportivo com design moderno e confortável, ideal para atividades físicas e uso casual. Em ótimo estado de conservação, com poucos usos.",
+      "images": [
+        "https://picsum.photos/400/300",
+        "https://picsum.photos/400/300"
+      ],
+      "brand": "Apple",
+      "categoryId": "3",
+      "condition": "usado",
+      "shipping": false,
+      "status": "available",
+      "createdAt": "2026-05-29T11:30:00Z"
+    },
+    {
+      "id": "107",
+      "userId": "1",
+      "title": "Smart TV Samsung 55\"",
+      "price": 2500,
+      "description": "Smart TV com resolução 4K, tela de 55 polegadas, ideal para assistir filmes e séries com alta qualidade de imagem. Em excelente estado de conservação, com poucos usos.",
+      "images": [
+        "https://picsum.photos/400/300",
+        "https://picsum.photos/400/300"
+      ],
+      "brand": "Apple",
+      "categoryId": "2",
+      "condition": "usado",
+      "shipping": false,
+      "status": "available",
+      "createdAt": "2026-05-27T16:20:00Z"
+    },
+    {
+      "id": "108",
+      "userId": "2",
+      "title": "Sofá Retrátil e Reclinável",
+      "price": 1800,
+      "description": "Sofá de 3 lugares, com sistema retrátil e reclinável, ideal para salas de estar. Em ótimo estado de conservação, com poucos usos.",
+      "images": [
+        "https://picsum.photos/400/300",
+        "https://picsum.photos/400/300"
+      ],
+      "brand": "Apple",
+      "categoryId": "9",
+      "condition": "usado",
+      "shipping": false,
+      "status": "available",
+      "createdAt": "2026-05-26T13:10:00Z"
+    },
+    {
+      "id": "109",
+      "userId": "1",
+      "title": "PlayStation 5",
+      "price": 4500,
+      "description": "Console de última geração, com desempenho excepcional e gráficos impressionantes. Em excelente estado de conservação, com poucos usos.",
+      "images": [
+        "https://picsum.photos/400/300",
+        "https://picsum.photos/400/300"
+      ],
+      "brand": "Apple",
+      "categoryId": "2",
+      "condition": "usado",
+      "shipping": false,
+      "status": "available",
+      "createdAt": "2026-05-31T12:00:00Z"
+    },
+    {
+      "id": "110",
+      "userId": "2",
+      "title": "Mesa de Jantar com 6 Cadeiras",
+      "price": 2200,
+      "description": "Conjunto de mesa de jantar com 6 cadeiras, ideal para salas de jantar. Em ótimo estado de conservação, com poucos usos.",
+      "images": [
+        "https://picsum.photos/400/300",
+        "https://picsum.photos/400/300"
+      ],
+      "brand": "Apple",
+      "categoryId": "9",
+      "condition": "usado",
+      "shipping": false,
+      "status": "available",
+      "createdAt": "2026-05-30T15:45:00Z"
+    },
+    {
+      "id": "111",
+      "userId": "1",
+      "title": "Fone de Ouvido Bluetooth Sony WH-1000XM4",
+      "price": 1200,
+      "description": "Fone de ouvido sem fio com cancelamento de ruído, ideal para ouvir música e atender chamadas com alta qualidade de som. Em excelente estado de conservação, com poucos usos.",
+      "images": [
+        "https://picsum.photos/400/300",
+        "https://picsum.photos/400/300"
+      ],
+      "brand": "Apple",
+      "categoryId": "2",
+      "condition": "usado",
+      "shipping": false,
+      "status": "available",
+      "createdAt": "2026-05-29T10:30:00Z"
+    },
+    {
+      "id": "112",
+      "userId": "2",
+      "title": "Cadeira Gamer DXRacer",
+      "price": 900,
+      "description": "Cadeira ergonômica para gamers, com design moderno e confortável, ideal para longas sessões de jogo. Em ótimo estado de conservação, com poucos usos.",
+      "images": [
+        "https://picsum.photos/400/300",
+        "https://picsum.photos/400/300"
+      ],
+      "brand": "Apple",
+      "categoryId": "9",
+      "condition": "usado",
+      "shipping": false,
+      "status": "available",
+      "createdAt": "2026-05-28T14:00:00Z"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

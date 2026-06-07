@@ -44,7 +44,16 @@ export const productsList = async (filters: ProductFilters) => {
 
     const { data } = await api.get("/products", { params });
 
-    return { data };
+    return {
+      data,
+      meta: {
+        pages: data.pages,
+        prev: data.prev,
+        next: data.next,
+        first: data.first,
+        last: data.last,
+      },
+    };
   } catch (error) {
     console.error(error);
     return {

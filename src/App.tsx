@@ -19,10 +19,6 @@ function App() {
 
           {/* Rotas Privadas */}
           <Route element={<PrivateRoute />}>
-            <Route
-              path="/inicio"
-              element={<h1>Página inicial - usuário logado</h1>}
-            />
             <Route path="/anunciar" element={<ProductForm />} />
             <Route path="/meus-anuncios" element={<h1>Meus Anúncios</h1>} />
           </Route>

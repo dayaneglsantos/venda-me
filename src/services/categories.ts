@@ -5,7 +5,7 @@ export const categoriesList = async () => {
     const { data } = await api.get("/categories");
     return { data };
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return {
       error: "Ocorreu um erro ao carregar as categorias",
     };
