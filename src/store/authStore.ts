@@ -1,18 +1,11 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-
-// Definindo a interface para o TypeScript
-interface Usuario {
-  id: string;
-  name: string;
-  email: string;
-  avatar?: string;
-}
+import type { UserType } from "../types/userType";
 
 interface AuthState {
-  user: Usuario | null;
+  user: UserType | null;
   isLogged: boolean;
-  login: (user: Usuario) => void;
+  login: (user: UserType) => void;
   logout: () => void;
 }
 

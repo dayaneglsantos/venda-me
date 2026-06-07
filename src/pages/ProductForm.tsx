@@ -10,7 +10,6 @@ import { FormField } from "../components/FormField";
 import Button from "../components/Button";
 import { useProductStore } from "../store/productStore";
 import { useAuthStore } from "../store/authStore";
-import { api } from "../services/api";
 
 // Componentes do Dnd-Kit para o Drag and Drop das fotos
 import { DndContext, closestCenter, type DragEndEvent } from "@dnd-kit/core";
@@ -22,6 +21,7 @@ import {
 import SelectInput from "../components/SelectInput";
 import { compressImage } from "../utils/compressImage";
 import SortableItem from "../components/SortableItem";
+import { createProduct } from "../services/products";
 
 export default function ProductForm() {
   const { addProduct } = useProductStore();
@@ -105,7 +105,6 @@ export default function ProductForm() {
     setValue("images", filteredImages, { shouldValidate: true });
   };
 
-  // Controla o fim do arrastar e soltar do dnd-kit
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (!over || active.id === over.id) return;
@@ -123,7 +122,7 @@ export default function ProductForm() {
     try {
       const payload = {
         id: crypto.randomUUID(),
-        userId: user?.id || "1",
+        userId: user?.id,
         title: formValues.title,
         price: formValues.price,
         description: formValues.description,
@@ -135,19 +134,15 @@ export default function ProductForm() {
         createdAt: new Date().toISOString(),
       };
 
-      const response = await api.post("/products", payload);
+      const response = await createProduct(payload);
 
-      if (response.status === 201) {
-        addProduct(response.data);
-        toast.success("Anúncio publicado com sucesso!");
-        navigate("/meus-anuncios");
-      }
+      addProduct(response.data);
+      toast.success("Anúncio publicado com sucesso!");
+      navigate("/meus-anuncios");
     } catch (error) {
       toast.error("Ocorreu um erro ao publicar o anúncio.");
     }
   };
-
-  console.log(formValues);
 
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center items-center">

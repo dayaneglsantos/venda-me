@@ -1,6 +1,8 @@
 export interface UserType {
-  id: string;
+  id: number;
   name: string;
   email: string;
   avatar?: string;
+  state?: string;
+  city?: string;
 }

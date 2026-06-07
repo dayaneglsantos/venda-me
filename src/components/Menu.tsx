@@ -35,7 +35,12 @@ export default function Menu() {
   return (
     <nav className="bg-orange-200 text-gray-700 p-2 px-6 md:px-8 relative">
       <div className="flex items-center justify-between w-full">
-        <img src="/logo.png" alt="Logo" className="h-8 md:h-12 w-auto mr-4" />
+        <img
+          src="/logo.png"
+          alt="Logo"
+          className="h-8 md:h-12 w-auto mr-4 cursor-pointer"
+          onClick={() => navigate("/")}
+        />
 
         {user ? (
           <button
@@ -85,7 +90,7 @@ export default function Menu() {
                 </li>
                 <li>
                   <Button
-                    variant="outline"
+                    variant="primary"
                     startIcon={<FiPlus />}
                     onClick={() => navigate("/anunciar")}
                     size="sm"
@@ -157,7 +162,7 @@ export default function Menu() {
                 </li>
                 <li>
                   <Button
-                    variant="outline"
+                    variant="primary"
                     onClick={() => {
                       navigate("/anunciar");
                       setIsMenuOpen(false);

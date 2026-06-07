@@ -1,3 +1,5 @@
+import { FiChevronDown } from "react-icons/fi";
+
 interface SelectInputProps {
   label: string;
   placeholder?: string;
@@ -16,24 +18,31 @@ export default function SelectInput({
   className,
 }: SelectInputProps) {
   return (
-    <div className={`mb-4 w-ful mt-2 ${className || ""}`}>
+    <div className={`w-ful min-w-20 mt-2 ${className || ""}`}>
       <label className="block mb-1 font-bold text-sm text-gray-500">
         {label}
       </label>
-      <select
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className={`p-2 border border-primary rounded bg-white w-full focus:outline-none focus:ring-2 focus:ring-primary ${value ? "text-gray-700" : "text-gray-400"}`}
-      >
-        <option value="" className="text-gray-400">
-          {placeholder || "Selecione..."}
-        </option>
-        {options.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
+      <div className="relative">
+        <select
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className={`text-sm p-2 border border-primary rounded bg-white w-full focus:outline-none appearance-none ${value ? "" : "text-gray-400"}`}
+        >
+          <option value="" className="text-gray-400">
+            {placeholder || "Selecione..."}
           </option>
-        ))}
-      </select>
+          {options.map((option) => (
+            <option
+              key={option.value}
+              value={option.value}
+              className="text-gray-700"
+            >
+              {option.label}
+            </option>
+          ))}
+        </select>
+        <FiChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+      </div>
     </div>
   );
 }

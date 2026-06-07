@@ -5,7 +5,9 @@ export const Layout = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Menu />
-      <Outlet />
+      <div className="flex-1">
+        <Outlet />
+      </div>
     </div>
   );
 };

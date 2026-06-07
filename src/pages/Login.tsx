@@ -45,7 +45,7 @@ export default function Login() {
 
       if (response?.data) {
         login(response.data);
-        navigate("/inicio");
+        navigate("/");
       } else if (response?.error) {
         toast.error(response?.error);
       }
@@ -57,7 +57,7 @@ export default function Login() {
 
   useEffect(() => {
     if (isLogged) {
-      navigate("/inicio");
+      navigate("/");
     }
   }, [isLogged]);
 
@@ -73,7 +73,7 @@ export default function Login() {
           type="email"
           placeholder="Digite seu e-mail"
           value={formValues.email}
-          onChange={(e) => setValue("email", e.target.value)}
+          onChange={(value) => setValue("email", value)}
           error={errors.email?.message}
           className="mb-4"
         />
@@ -82,7 +82,7 @@ export default function Login() {
           type="password"
           placeholder="Digite sua senha"
           value={formValues.password}
-          onChange={(e) => setValue("password", e.target.value)}
+          onChange={(value) => setValue("password", value)}
           error={errors.password?.message}
         />
         <Button

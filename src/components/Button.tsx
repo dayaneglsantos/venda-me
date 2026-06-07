@@ -44,9 +44,9 @@ export default function Button({
       disabled={disabled}
       {...props}
     >
-      {startIcon && <span className="mr-2">{startIcon}</span>}
+      {startIcon && <span className="mr-1">{startIcon}</span>}
       <span className="flex-1">{title}</span>
-      {endIcon && <span className="ml-2">{endIcon}</span>}
+      {endIcon && <span className="ml-1">{endIcon}</span>}
     </button>
   );
 }
