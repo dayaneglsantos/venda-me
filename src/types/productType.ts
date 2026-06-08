@@ -13,4 +13,5 @@ export interface ProductType {
   shipping: boolean;
   createdAt: string;
   user?: UserType;
+  status: "available" | "paused" | "sold";
 }
