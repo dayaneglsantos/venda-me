@@ -1,14 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as zod from "zod";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 
 // Componentes internos
 import { FormField } from "../components/FormField";
 import Button from "../components/Button";
-import { useProductStore } from "../store/productStore";
 import { useAuthStore } from "../store/authStore";
 
 // Componentes do Dnd-Kit para o Drag and Drop das fotos
@@ -21,27 +20,30 @@ import {
 import SelectInput from "../components/SelectInput";
 import { compressImage } from "../utils/compressImage";
 import SortableItem from "../components/SortableItem";
-import { createProduct } from "../services/products";
+import { createProduct, getProduct, updateProduct } from "../services/products";
+import type { ProductType } from "../types/productType";
+import { FiAlertCircle } from "react-icons/fi";
 
 export default function ProductForm() {
-  const { addProduct } = useProductStore();
   const { user } = useAuthStore();
   const navigate = useNavigate();
+  const { id } = useParams();
+  const [product, setProduct] = useState<ProductType | null>(null);
 
   // Estado local para controlar o input temporário de adicionar imagem
   const [tempImageUrl, setTempImageUrl] = useState("");
-
-  const [priceMask, setPriceMask] = useState("");
 
   const productSchema = zod.object({
     title: zod.string().min(3, "O título deve conter no mínimo 3 caracteres"),
     price: zod.number().min(1, "Campo obrigatório"),
     description: zod.string().optional(),
     brand: zod.string().optional(),
-    categoryId: zod.number().optional().nullable(),
+    categoryId: zod.string().optional().nullable(),
     condition: zod.enum(["novo", "usado"]),
     shipping: zod.boolean(),
-    images: zod.array(zod.string()).min(1, "Adicione pelo menos uma imagem"),
+    images: zod
+      .array(zod.object({ id: zod.string(), url: zod.string() }))
+      .min(1, "Adicione pelo menos uma imagem"),
   });
 
   type ProductFormData = zod.infer<typeof productSchema>;
@@ -65,6 +67,7 @@ export default function ProductForm() {
     formState: { isSubmitting, errors },
     watch,
     setValue,
+    reset,
   } = methods;
 
   const formValues = watch();
@@ -72,9 +75,13 @@ export default function ProductForm() {
   const handleAddImageUrl = () => {
     if (!tempImageUrl.trim()) return;
     const currentImages = formValues.images || [];
-    setValue("images", [...currentImages, tempImageUrl.trim()], {
-      shouldValidate: true,
-    });
+    setValue(
+      "images",
+      [...currentImages, { id: crypto.randomUUID(), url: tempImageUrl.trim() }],
+      {
+        shouldValidate: true,
+      },
+    );
     setTempImageUrl("");
   };
 
@@ -89,9 +96,13 @@ export default function ProductForm() {
       const compressedBase64 = await compressImage(file);
 
       const currentImages = formValues.images || [];
-      setValue("images", [...currentImages, compressedBase64], {
-        shouldValidate: true,
-      });
+      setValue(
+        "images",
+        [...currentImages, { id: crypto.randomUUID(), url: compressedBase64 }],
+        {
+          shouldValidate: true,
+        },
+      );
     } catch (error) {
       toast.error("Erro ao processar a imagem do computador.");
     }
@@ -107,13 +118,18 @@ export default function ProductForm() {
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
+
     if (!over || active.id === over.id) return;
 
-    const oldIndex = formValues.images.indexOf(active.id as string);
-    const newIndex = formValues.images.indexOf(over.id as string);
+    const oldIndex = formValues.images.findIndex((img) => img.id === active.id);
 
-    const reorderedImages = arrayMove(formValues.images, oldIndex, newIndex);
-    setValue("images", reorderedImages);
+    const newIndex = formValues.images.findIndex((img) => img.id === over.id);
+
+    if (oldIndex === -1 || newIndex === -1) return;
+
+    setValue("images", arrayMove(formValues.images, oldIndex, newIndex), {
+      shouldValidate: true,
+    });
   };
 
   const handleRegisterProduct = async () => {
@@ -132,17 +148,59 @@ export default function ProductForm() {
         condition: formValues.condition,
         shipping: formValues.shipping,
         createdAt: new Date().toISOString(),
+        status: "available",
       };
 
-      const response = await createProduct(payload);
+      if (product) {
+        await updateProduct(product.id, payload);
+      } else {
+        await createProduct(payload);
+      }
 
-      addProduct(response.data);
-      toast.success("Anúncio publicado com sucesso!");
+      toast.success(
+        `Anúncio ${product ? "atualizado" : "criado"} com sucesso!`,
+      );
       navigate("/meus-anuncios");
     } catch (error) {
-      toast.error("Ocorreu um erro ao publicar o anúncio.");
+      toast.error(
+        `Ocorreu um erro ao ${product ? "atualizar" : "criar"} o anúncio.`,
+      );
     }
   };
+
+  const getProductData = async (productId: string) => {
+    try {
+      const { data, error } = await getProduct(productId);
+      if (data) {
+        setProduct(data);
+      } else if (error) {
+        toast.error(error);
+      }
+    } catch (error) {
+      toast.error("Ocorreu um erro ao carregar os dados do produto.");
+    }
+  };
+
+  useEffect(() => {
+    if (id) {
+      getProductData(id);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    if (product) {
+      reset({
+        title: product.title,
+        price: product.price,
+        description: product.description || "",
+        brand: product.brand || "",
+        categoryId: product.categoryId || null,
+        condition: product.condition,
+        shipping: product.shipping,
+        images: product.images,
+      });
+    }
+  }, [product, reset]);
 
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center items-center">
@@ -151,7 +209,7 @@ export default function ProductForm() {
         className="max-w-2xl w-full mx-auto p-6 bg-white rounded-xl shadow flex flex-col"
       >
         <h1 className="text-xl font-bold text-primary-dark mb-6 text-center">
-          Novo Anúncio
+          {product ? "Editar" : "Criar"} Anúncio
         </h1>
 
         <FormField
@@ -165,15 +223,9 @@ export default function ProductForm() {
         <div className="grid grid-cols-2 gap-4">
           <FormField
             label="Preço"
-            value={priceMask}
+            value={String(formValues.price)}
             onChange={(value) => {
-              setPriceMask(value);
-
-              const numericValue = Number(
-                value.replace(/\./g, "").replace(",", "."),
-              );
-
-              setValue("price", numericValue);
+              setValue("price", Number(value));
             }}
             maskOptions={{
               mask: Number,
@@ -185,6 +237,7 @@ export default function ProductForm() {
               normalizeZeros: true,
               padFractionalZeros: true,
             }}
+            error={errors.price?.message}
           />
 
           <FormField
@@ -275,18 +328,18 @@ export default function ProductForm() {
               onDragEnd={handleDragEnd}
             >
               <SortableContext
-                items={formValues.images}
+                items={formValues.images.map((img) => img.id)}
                 strategy={horizontalListSortingStrategy}
               >
                 <div className="flex flex-wrap gap-3 mt-2">
-                  {formValues.images.map((url, index) => (
+                  {formValues.images.map((img, index) => (
                     <SortableItem
-                      key={url}
-                      id={url}
+                      key={img.id}
+                      id={img.id}
                       onRemove={() => handleRemoveImage(index)}
                     >
                       <img
-                        src={url}
+                        src={img.url}
                         alt="Miniatura"
                         className="w-full h-full object-cover pointer-events-none"
                       />
@@ -342,8 +395,15 @@ export default function ProductForm() {
           </label>
         </div>
 
+        {product && product.status !== "available" && (
+          <p className="text-sm text-orange-400">
+            <FiAlertCircle className="inline mr-1" />
+            Ao salvar, o anuncio será atualizado e reativado.
+          </p>
+        )}
+
         <Button type="submit" disabled={isSubmitting} className="w-full mt-4">
-          Publicar Anúncio
+          {product ? "Salvar Alterações" : "Publicar Anúncio"}
         </Button>
       </form>
     </div>

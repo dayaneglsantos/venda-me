@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast";
 import { PrivateRoute } from "./components/PrivateRoute";
 import ProductForm from "./pages/ProductForm";
 import Home from "./pages/Home";
+import MyListings from "./pages/MyListings";
 
 function App() {
   return (
@@ -20,7 +21,8 @@ function App() {
           {/* Rotas Privadas */}
           <Route element={<PrivateRoute />}>
             <Route path="/anunciar" element={<ProductForm />} />
-            <Route path="/meus-anuncios" element={<h1>Meus Anúncios</h1>} />
+            <Route path="/anuncio/:id/editar" element={<ProductForm />} />
+            <Route path="/meus-anuncios" element={<MyListings />} />
           </Route>
         </Route>
 

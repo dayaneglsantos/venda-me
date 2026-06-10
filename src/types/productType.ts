@@ -6,11 +6,12 @@ export interface ProductType {
   title: string;
   price: number;
   description: string;
-  images: string[]; // URLs organizadas pelo Dnd Kit
+  images: { id: string; url: string }[];
   brand: string;
-  categoryId: number;
+  categoryId: string;
   condition: "novo" | "usado";
   shipping: boolean;
   createdAt: string;
   user?: UserType;
+  status: "available" | "paused" | "sold";
 }

@@ -7,19 +7,24 @@ import { useAuthStore } from "../store/authStore";
 import { categoriesList } from "../services/categories";
 import toast from "react-hot-toast";
 import ProductCard from "../components/ProductCard";
-import { myProductsMeta, productsList } from "../services/products";
+import {
+  deleteProduct,
+  myProductsList,
+  myProductsMeta,
+} from "../services/products";
 import EmptyContent from "../components/EmptyContent";
 import Loader from "../components/Loader";
+import type { ProductType } from "../types/productType";
 
-export default function Home() {
+export default function MyListings() {
   const { user } = useAuthStore();
 
   const [filters, setFilters] = useState({
     pageNumber: 1,
     pageSize: 9,
     search: "",
-    state: "",
     category: "",
+    status: "",
   });
   const [searchTerm, setSearchTerm] = useState("");
   const [categories, setCategories] = useState([]);
@@ -42,16 +47,35 @@ export default function Home() {
     }
   };
 
-  const getProducts = async () => {
+  const getMyProducts = async () => {
+    if (!user) return;
     setIsLoading(true);
     try {
-      const { data, meta } = await productsList(filters);
+      const { data, meta } = await myProductsList(filters);
       setProducts(data.data);
       setMeta(meta ?? { prev: false, next: false, totalPages: 0, pages: 0 });
     } catch (error) {
       toast.error("Ocorreu um erro ao carregar os produtos");
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleDeleteProduct = async (id: string) => {
+    try {
+      const { error } = await deleteProduct(id);
+      if (!error) {
+        toast.success("Produto excluído com sucesso!");
+        setProducts((prev) =>
+          prev.filter((prod: ProductType) => prod.id !== id),
+        );
+        getMyProductsMeta();
+      } else {
+        toast.error(error);
+      }
+    } catch (error) {
+      console.error("Erro ao excluir produto:", error);
+      toast.error("Ocorreu um erro ao excluir o produto");
     }
   };
 
@@ -83,39 +107,8 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    getProducts();
+    getMyProducts();
   }, [filters]);
-
-  const statesList = [
-    { label: "Todos os estados", value: "" },
-    { label: "Acre", value: "AC" },
-    { label: "Alagoas", value: "AL" },
-    { label: "Amapá", value: "AP" },
-    { label: "Amazonas", value: "AM" },
-    { label: "Bahia", value: "BA" },
-    { label: "Ceará", value: "CE" },
-    { label: "Distrito Federal", value: "DF" },
-    { label: "Espírito Santo", value: "ES" },
-    { label: "Goiás", value: "GO" },
-    { label: "Maranhão", value: "MA" },
-    { label: "Mato Grosso", value: "MT" },
-    { label: "Mato Grosso do Sul", value: "MS" },
-    { label: "Minas Gerais", value: "MG" },
-    { label: "Pará", value: "PA" },
-    { label: "Paraíba", value: "PB" },
-    { label: "Paraná", value: "PR" },
-    { label: "Pernambuco", value: "PE" },
-    { label: "Piauí", value: "PI" },
-    { label: "Rio de Janeiro", value: "RJ" },
-    { label: "Rio Grande do Norte", value: "RN" },
-    { label: "Rio Grande do Sul", value: "RS" },
-    { label: "Rondônia", value: "RO" },
-    { label: "Roraima", value: "RR" },
-    { label: "Santa Catarina", value: "SC" },
-    { label: "São Paulo", value: "SP" },
-    { label: "Sergipe", value: "SE" },
-    { label: "Tocantins", value: "TO" },
-  ];
 
   const categoriesOptions = categories?.map((cat: any) => ({
     label: cat.label,
@@ -157,20 +150,24 @@ export default function Home() {
           placeholder="Buscar anúncio..."
         />
         <SelectInput
-          options={statesList}
-          label="Filtrar por estado"
-          value={filters.state}
-          onChange={(value) => {
-            setFilters((prev) => ({ ...prev, state: value }));
-          }}
-          className="w-48"
-        />
-        <SelectInput
           options={categoriesOptions}
           label="Filtrar por categoria"
           value={filters.category}
           onChange={(value) => {
             setFilters((prev) => ({ ...prev, category: value }));
+          }}
+          className="w-48"
+        />
+        <SelectInput
+          options={[
+            { label: "Ativos", value: "available" },
+            { label: "Pausados", value: "paused" },
+            { label: "Vendidos", value: "sold" },
+          ]}
+          label="Status"
+          value={filters.status}
+          onChange={(value) => {
+            setFilters((prev) => ({ ...prev, status: value }));
           }}
           className="w-48"
         />
@@ -184,8 +181,8 @@ export default function Home() {
               pageNumber: 1,
               pageSize: 9,
               search: "",
-              state: "",
               category: "",
+              status: "",
             });
           }}
         >
@@ -216,7 +213,10 @@ export default function Home() {
           <div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
               {products?.map((product) => (
-                <ProductCard product={product} />
+                <ProductCard
+                  product={product}
+                  handleDelete={handleDeleteProduct}
+                />
               ))}
             </div>
             <div className="flex justify-center items-center gap-2 mt-6">

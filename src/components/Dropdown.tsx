@@ -31,9 +31,14 @@ function useDropdownContext() {
 interface DropdownProps {
   children: ReactNode;
   align?: "left" | "right";
+  className?: string;
 }
 
-export default function Dropdown({ children, align = "right" }: DropdownProps) {
+export default function Dropdown({
+  children,
+  align = "right",
+  className,
+}: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -53,7 +58,10 @@ export default function Dropdown({ children, align = "right" }: DropdownProps) {
 
   return (
     <DropdownContext.Provider value={{ isOpen, setIsOpen, align }}>
-      <div className="relative inline-block text-left" ref={dropdownRef}>
+      <div
+        className={`relative inline-block text-left ${className}`}
+        ref={dropdownRef}
+      >
         {children}
       </div>
     </DropdownContext.Provider>
@@ -63,13 +71,17 @@ export default function Dropdown({ children, align = "right" }: DropdownProps) {
 // ==========================================
 interface DropdownButtonProps {
   children: ReactNode;
+  className?: string;
 }
 
-export function DropdownButton({ children }: DropdownButtonProps) {
+export function DropdownButton({ children, className }: DropdownButtonProps) {
   const { isOpen, setIsOpen } = useDropdownContext();
 
   return (
-    <div onClick={() => setIsOpen(!isOpen)} className="cursor-pointer">
+    <div
+      onClick={() => setIsOpen(!isOpen)}
+      className={`cursor-pointer ${className}`}
+    >
       {children}
     </div>
   );
@@ -81,7 +93,7 @@ interface DropdownContentProps {
 }
 
 export function DropdownContent({ children }: DropdownContentProps) {
-  const { isOpen, setIsOpen, align } = useDropdownContext();
+  const { isOpen, align } = useDropdownContext();
 
   if (!isOpen) return null;
 
@@ -89,7 +101,7 @@ export function DropdownContent({ children }: DropdownContentProps) {
 
   return (
     <div
-      className={`absolute ${alignmentClass} mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-100 z-50 animate-in fade-in slide-in-from-top-1 duration-200`}
+      className={`absolute ${alignmentClass} top-full mt-2 bg-white rounded-lg shadow-xl border border-gray-100 z-50 animate-in fade-in slide-in-from-top-1 duration-200 w-fit`}
     >
       {children}
     </div>
