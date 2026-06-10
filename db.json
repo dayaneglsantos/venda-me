@@ -144,29 +144,6 @@
       "createdAt": "2026-05-28T14:45:00Z"
     },
     {
-      "id": "105",
-      "userId": "1",
-      "title": "Câmera Canon EOS Rebel T7",
-      "price": 800,
-      "description": "Câmera DSLR com sensor de 24.1MP, perfeita para fotografia amadora e entusiastas. Inclui lente kit 18-55mm, cartão de memória de 16GB e bolsa de transporte. Em excelente estado de conservação, com poucos usos.",
-      "images": [
-        {
-          "id": "7",
-          "url": "https://picsum.photos/400/300"
-        },
-        {
-          "id": "8",
-          "url": "https://picsum.photos/400/300"
-        }
-      ],
-      "brand": "Apple",
-      "categoryId": "2",
-      "condition": "usado",
-      "shipping": false,
-      "status": "sold",
-      "createdAt": "2026-05-30T09:15:00Z"
-    },
-    {
       "id": "106",
       "userId": "2",
       "title": "Tênis Nike Air Max 270",
@@ -188,29 +165,6 @@
       "shipping": false,
       "status": "available",
       "createdAt": "2026-05-29T11:30:00Z"
-    },
-    {
-      "id": "107",
-      "userId": "1",
-      "title": "Smart TV Samsung 55\"",
-      "price": 2500,
-      "description": "Smart TV com resolução 4K, tela de 55 polegadas, ideal para assistir filmes e séries com alta qualidade de imagem. Em excelente estado de conservação, com poucos usos.",
-      "images": [
-        {
-          "id": "11",
-          "url": "https://picsum.photos/400/300"
-        },
-        {
-          "id": "12",
-          "url": "https://picsum.photos/400/300"
-        }
-      ],
-      "brand": "Apple",
-      "categoryId": "2",
-      "condition": "usado",
-      "shipping": false,
-      "status": "available",
-      "createdAt": "2026-05-27T16:20:00Z"
     },
     {
       "id": "108",
@@ -317,7 +271,7 @@
       "id": "Hljs3rzIw7I",
       "userId": "1",
       "title": "teste",
-      "price": 3,
+      "price": 120.5,
       "description": "lk~lç",
       "images": [
         {
@@ -357,7 +311,7 @@
       "categoryId": "2",
       "condition": "usado",
       "shipping": true,
-      "createdAt": "2026-06-10T19:04:48.232Z",
+      "createdAt": "2026-06-10T21:39:08.155Z",
       "status": "available"
     }
   ],

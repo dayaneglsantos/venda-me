@@ -23,7 +23,7 @@ import { useState } from "react";
 
 interface ProductCardProps {
   product: ProductType;
-  handleDelete: (id: string) => void;
+  handleDelete?: (id: string) => void;
 }
 
 export default function ProductCard({
@@ -51,7 +51,7 @@ export default function ProductCard({
       {isMyProduct && (
         <Dropdown align="right">
           <DropdownButton className="absolute -top-2 -right-2 z-50">
-            <FiMoreVertical className="text-3xl bg-gray-200 border border-primary-light p-1 rounded-2xl text-gray-500 cursor-pointer" />
+            <FiMoreVertical className="text-2xl bg-primary-lighter light p-0.5 rounded-2xl text-gray-500 cursor-pointer" />
           </DropdownButton>
 
           <DropdownContent>
@@ -79,13 +79,15 @@ export default function ProductCard({
                 Retomar Anúncio
               </DropdownItem>
             )}
-            <DropdownItem
-              onClick={() => handleDelete(product?.id)}
-              variant="danger"
-            >
-              <FiTrash className="inline mr-1" />
-              Excluir
-            </DropdownItem>
+            {handleDelete && (
+              <DropdownItem
+                onClick={() => handleDelete(product?.id)}
+                variant="danger"
+              >
+                <FiTrash className="inline mr-1" />
+                Excluir
+              </DropdownItem>
+            )}
           </DropdownContent>
         </Dropdown>
       )}
