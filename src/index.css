@@ -36,3 +36,8 @@
 .animate-loader {
   animation: loader 1.2s linear infinite;
 }
+
+/* Esconde scrollbar da tira de thumbnails */
+.thumbs-strip::-webkit-scrollbar {
+  display: none;
+}

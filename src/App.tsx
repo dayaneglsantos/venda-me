@@ -6,6 +6,7 @@ import { PrivateRoute } from "./components/PrivateRoute";
 import ProductForm from "./pages/ProductForm";
 import Home from "./pages/Home";
 import MyListings from "./pages/MyListings";
+import ProductDetails from "./pages/ProductDetails";
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
 
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/anuncio/:id" element={<h1>Detalhes do Anúncio</h1>} />
+          <Route path="/anuncio/:id" element={<ProductDetails />} />
 
           {/* Rotas Privadas */}
           <Route element={<PrivateRoute />}>

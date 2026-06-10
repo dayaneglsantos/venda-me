@@ -91,11 +91,29 @@ export default function ProductForm() {
   ) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    e.target.value = "";
 
     try {
       const compressedBase64 = await compressImage(file);
 
+      const PAYLOAD_LIMIT = 102400; // 102400 = limite do json-server;
+      const METADATA_OVERHEAD = 2000; // Estimativa de overhead (JSON, chaves, etc) para cada imagem
       const currentImages = formValues.images || [];
+      const existingImagesSize = currentImages.reduce(
+        (sum, img) => sum + img.url.length,
+        0,
+      );
+
+      if (
+        existingImagesSize + compressedBase64.length + METADATA_OVERHEAD >
+        PAYLOAD_LIMIT
+      ) {
+        toast.error(
+          `A imagem é grande demais (${Math.round(compressedBase64.length / 1024)} KB). Use uma imagem menor ou remova outras antes de adicionar.`,
+        );
+        return;
+      }
+
       setValue(
         "images",
         [...currentImages, { id: crypto.randomUUID(), url: compressedBase64 }],

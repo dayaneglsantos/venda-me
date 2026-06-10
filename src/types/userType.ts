@@ -5,4 +5,5 @@ export interface UserType {
   avatar?: string;
   state?: string;
   city?: string;
+  phone?: string;
 }
