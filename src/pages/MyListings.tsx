@@ -8,12 +8,13 @@ import { categoriesList } from "../services/categories";
 import toast from "react-hot-toast";
 import ProductCard from "../components/ProductCard";
 import {
+  deleteProduct,
   myProductsList,
   myProductsMeta,
-  productsList,
 } from "../services/products";
 import EmptyContent from "../components/EmptyContent";
 import Loader from "../components/Loader";
+import type { ProductType } from "../types/productType";
 
 export default function MyListings() {
   const { user } = useAuthStore();
@@ -60,6 +61,24 @@ export default function MyListings() {
     }
   };
 
+  const handleDeleteProduct = async (id: string) => {
+    try {
+      const { error } = await deleteProduct(id);
+      if (!error) {
+        toast.success("Produto excluído com sucesso!");
+        setProducts((prev) =>
+          prev.filter((prod: ProductType) => prod.id !== id),
+        );
+        getMyProductsMeta();
+      } else {
+        toast.error(error);
+      }
+    } catch (error) {
+      console.error("Erro ao excluir produto:", error);
+      toast.error("Ocorreu um erro ao excluir o produto");
+    }
+  };
+
   const getMyProductsMeta = async () => {
     if (!user) return;
     setIsLoading(true);
@@ -95,8 +114,6 @@ export default function MyListings() {
     label: cat.label,
     value: cat.id,
   }));
-
-  const pages = Array.from({ length: meta.pages }, (_, index) => index + 1);
 
   const getVisiblePages = () => {
     const totalPages = meta.pages;
@@ -196,7 +213,10 @@ export default function MyListings() {
           <div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
               {products?.map((product) => (
-                <ProductCard product={product} />
+                <ProductCard
+                  product={product}
+                  handleDelete={handleDeleteProduct}
+                />
               ))}
             </div>
             <div className="flex justify-center items-center gap-2 mt-6">

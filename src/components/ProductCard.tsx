@@ -4,41 +4,93 @@ import Button from "./Button";
 import dayjs from "dayjs";
 import Badge from "./Badge";
 import { useAuthStore } from "../store/authStore";
-import { FiMoreVertical } from "react-icons/fi";
+import {
+  FiCheckCircle,
+  FiEdit,
+  FiMoreVertical,
+  FiPauseCircle,
+  FiPlayCircle,
+  FiTrash,
+} from "react-icons/fi";
 import Dropdown, {
   DropdownButton,
   DropdownContent,
-  DropdownHeader,
   DropdownItem,
 } from "./Dropdown";
+import toast from "react-hot-toast";
+import { updateProduct } from "../services/products";
+import { useState } from "react";
 
 interface ProductCardProps {
   product: ProductType;
+  handleDelete: (id: string) => void;
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({
+  product: receivedProduct,
+  handleDelete,
+}: ProductCardProps) {
   const navigate = useNavigate();
   const { user } = useAuthStore();
+  const [product, setProduct] = useState<ProductType>(receivedProduct);
 
   const isMyProduct = user && product.userId === user.id;
 
+  const handleChangeStatus = async (status: string) => {
+    try {
+      const { data } = await updateProduct(product.id, { ...product, status });
+      toast.success("Status do produto atualizado com sucesso");
+      setProduct(data);
+    } catch (error) {
+      toast.error("Ocorreu um erro ao alterar o status do produto");
+    }
+  };
+
   return (
     <div className="flex flex-col justify-between shadow-md rounded-lg p-3 bg-white relative">
-      <Dropdown align="right">
-        <DropdownButton className="absolute -top-2 -right-2 z-50">
-          <FiMoreVertical className="text-3xl bg-gray-200 border border-primary-light p-1 rounded-2xl text-gray-500 cursor-pointer" />
-        </DropdownButton>
+      {isMyProduct && (
+        <Dropdown align="right">
+          <DropdownButton className="absolute -top-2 -right-2 z-50">
+            <FiMoreVertical className="text-3xl bg-gray-200 border border-primary-light p-1 rounded-2xl text-gray-500 cursor-pointer" />
+          </DropdownButton>
 
-        <DropdownContent>
-          <DropdownItem onClick={() => {}}>Editar</DropdownItem>
-
-          <DropdownItem onClick={() => {}} variant="danger">
-            Excluir
-          </DropdownItem>
-        </DropdownContent>
-      </Dropdown>
+          <DropdownContent>
+            <DropdownItem
+              onClick={() => navigate(`/anuncio/${product.id}/editar`)}
+            >
+              <FiEdit className="inline mr-1" />
+              Editar
+            </DropdownItem>
+            {product.status !== "sold" && (
+              <DropdownItem onClick={() => handleChangeStatus("sold")}>
+                <FiCheckCircle className="inline mr-1" />
+                Marcar como Vendido
+              </DropdownItem>
+            )}
+            {product.status === "available" && (
+              <DropdownItem onClick={() => handleChangeStatus("paused")}>
+                <FiPauseCircle className="inline mr-1" />
+                Pausar Anúncio
+              </DropdownItem>
+            )}
+            {product.status === "paused" && (
+              <DropdownItem onClick={() => handleChangeStatus("available")}>
+                <FiPlayCircle className="inline mr-1" />
+                Retomar Anúncio
+              </DropdownItem>
+            )}
+            <DropdownItem
+              onClick={() => handleDelete(product?.id)}
+              variant="danger"
+            >
+              <FiTrash className="inline mr-1" />
+              Excluir
+            </DropdownItem>
+          </DropdownContent>
+        </Dropdown>
+      )}
       <img
-        src={product.images[0]}
+        src={product.images[0].url}
         alt="Produto"
         className="w-full h-48 object-cover rounded-md mb-3"
       />

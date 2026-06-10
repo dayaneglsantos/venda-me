@@ -11,6 +11,18 @@ interface ProductFilters {
   status?: string;
 }
 
+export const getProduct = async (id: string) => {
+  try {
+    const { data } = await api.get(`/products/${id}?_embed=user`);
+    return { data };
+  } catch (error) {
+    console.error(error);
+    return {
+      error: "Ocorreu um erro ao carregar o produto",
+    };
+  }
+};
+
 export const productsList = async (filters: ProductFilters) => {
   const { user } = useAuthStore.getState();
 
@@ -167,6 +179,30 @@ export const myProductsMeta = async (user: UserType) => {
     console.error(error);
     return {
       error: "Ocorreu um erro ao carregar os produtos",
+    };
+  }
+};
+
+export const updateProduct = async (id: string, productData: any) => {
+  try {
+    const { data } = await api.put(`/products/${id}`, productData);
+    return { data };
+  } catch (error) {
+    console.error(error);
+    return {
+      error: "Ocorreu um erro ao atualizar o produto",
+    };
+  }
+};
+
+export const deleteProduct = async (id: string) => {
+  try {
+    await api.delete(`/products/${id}`);
+    return { data: null };
+  } catch (error) {
+    console.error(error);
+    return {
+      error: "Ocorreu um erro ao excluir o produto",
     };
   }
 };

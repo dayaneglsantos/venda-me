@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAuthStore } from "../store/authStore";
 import {
   FiHome,
@@ -11,10 +11,8 @@ import {
   FiX,
   FiSettings,
 } from "react-icons/fi";
-import { useProductStore } from "../store/productStore";
 import { useNavigate } from "react-router-dom";
 import Button from "./Button";
-import { FormField } from "./FormField";
 import Dropdown, {
   DropdownButton,
   DropdownContent,

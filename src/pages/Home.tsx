@@ -122,8 +122,6 @@ export default function Home() {
     value: cat.id,
   }));
 
-  const pages = Array.from({ length: meta.pages }, (_, index) => index + 1);
-
   const getVisiblePages = () => {
     const totalPages = meta.pages;
     const currentPage = filters.pageNumber;

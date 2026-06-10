@@ -65,11 +65,19 @@ export function FormField({
       <div className="relative w-full flex items-center">
         {shouldUseMask ? (
           <IMaskInput
-            {...(maskOptions ?? { mask })}
+            {...maskOptions}
             value={value}
+            unmask={true}
             placeholder={placeholder}
             disabled={disabled}
-            onAccept={(value) => onChange(String(value))}
+            onAccept={(value) => {
+              if (maskOptions?.mask === Number) {
+                onChange(String(Number(value)));
+                return;
+              }
+
+              onChange(value);
+            }}
             className={inputClassName}
           />
         ) : (

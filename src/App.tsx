@@ -21,6 +21,7 @@ function App() {
           {/* Rotas Privadas */}
           <Route element={<PrivateRoute />}>
             <Route path="/anunciar" element={<ProductForm />} />
+            <Route path="/anuncio/:id/editar" element={<ProductForm />} />
             <Route path="/meus-anuncios" element={<MyListings />} />
           </Route>
         </Route>
