@@ -6,10 +6,10 @@ import type { Swiper as SwiperType } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { api } from "../services/api";
 import { deleteProduct, getProduct, updateProduct } from "../services/products";
 import type { ProductType } from "../types/productType";
 import type { UserType } from "../types/userType";
+import Avatar from "../components/Avatar";
 import Badge from "../components/Badge";
 import Button from "../components/Button";
 import Loader from "../components/Loader";
@@ -26,7 +26,6 @@ import {
   FiTag,
   FiTrash,
   FiTruck,
-  FiUser,
 } from "react-icons/fi";
 import { Tooltip } from "react-tooltip";
 import toast from "react-hot-toast";
@@ -374,17 +373,7 @@ export default function ProductDetails() {
           </h2>
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <div className="flex items-center gap-3 flex-1">
-              {seller.avatar ? (
-                <img
-                  src={seller.avatar}
-                  alt={seller.name}
-                  className="w-14 h-14 rounded-full object-cover border-2 border-primary-lighter"
-                />
-              ) : (
-                <div className="w-14 h-14 rounded-full bg-primary-lighter flex items-center justify-center">
-                  <FiUser className="text-primary text-2xl" />
-                </div>
-              )}
+              <Avatar src={seller.avatar} alt={seller.name} size="md" />
               <div className="flex flex-col gap-0.5">
                 <p className="font-semibold text-gray-800">{seller.name}</p>
                 {seller.city && seller.state && (
