@@ -7,6 +7,7 @@ import ProductForm from "./pages/ProductForm";
 import Home from "./pages/Home";
 import MyListings from "./pages/MyListings";
 import ProductDetails from "./pages/ProductDetails";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -27,7 +28,7 @@ function App() {
           </Route>
         </Route>
 
-        <Route path="*" element={<h1>404 - Página não encontrada</h1>} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );
