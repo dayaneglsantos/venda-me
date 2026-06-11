@@ -1,13 +1,37 @@
 {
   "categories": [
-    { "id": "1", "label": "Eletrônicos" },
-    { "id": "2", "label": "Roupas e Acessórios" },
-    { "id": "3", "label": "Móveis" },
-    { "id": "4", "label": "Livros e Educação" },
-    { "id": "5", "label": "Esportes e Fitness" },
-    { "id": "6", "label": "Casa e Decoração" },
-    { "id": "7", "label": "Beleza e Cuidados" },
-    { "id": "8", "label": "Brinquedos e Jogos" }
+    {
+      "id": "1",
+      "label": "Eletrônicos"
+    },
+    {
+      "id": "2",
+      "label": "Roupas e Acessórios"
+    },
+    {
+      "id": "3",
+      "label": "Móveis"
+    },
+    {
+      "id": "4",
+      "label": "Livros e Educação"
+    },
+    {
+      "id": "5",
+      "label": "Esportes e Fitness"
+    },
+    {
+      "id": "6",
+      "label": "Casa e Decoração"
+    },
+    {
+      "id": "7",
+      "label": "Beleza e Cuidados"
+    },
+    {
+      "id": "8",
+      "label": "Brinquedos e Jogos"
+    }
   ],
   "users": [
     {
@@ -75,7 +99,7 @@
         "phone": "(11) 98765-4321"
       },
       "title": "iPhone 13 Pro Space Gray",
-      "price": 3500.0,
+      "price": 3500,
       "description": "iPhone 13 Pro em perfeito estado, com capa e vidro protetor. 256GB de armazenamento. Único dono, nunca caiu.",
       "images": [
         {
@@ -111,7 +135,7 @@
         "phone": "(11) 99876-5432"
       },
       "title": "Samsung Galaxy A52",
-      "price": 1800.0,
+      "price": 1800,
       "description": "Celular Samsung Galaxy A52 com tela AMOLED, câmera 64MP. Excelente custo benefício, com acessórios.",
       "images": [
         {
@@ -143,7 +167,7 @@
         "phone": "(11) 99876-5432"
       },
       "title": "Notebook Lenovo IdeaPad 3",
-      "price": 2200.0,
+      "price": 2200,
       "description": "Notebook com processador Intel i5, 8GB RAM, SSD 256GB. Ideal para trabalho e estudos, muito rápido.",
       "images": [
         {
@@ -175,7 +199,7 @@
         "phone": "(21) 98765-4321"
       },
       "title": "Jaqueta Jeans Azul Escuro",
-      "price": 150.0,
+      "price": 150,
       "description": "Jaqueta jeans de ótima qualidade, tamanho M. Pouco usada, praticamente nova. Perfeita para o inverno.",
       "images": [
         {
@@ -207,7 +231,7 @@
         "phone": "(21) 98765-4321"
       },
       "title": "Tênis Nike Air Max",
-      "price": 450.0,
+      "price": 450,
       "description": "Tênis Nike Air Max branco, tamanho 42, para corrida ou uso casual. Novo com caixa original.",
       "images": [
         {
@@ -239,7 +263,7 @@
         "phone": "(31) 99876-5432"
       },
       "title": "Sofá Reclinável Verde",
-      "price": 800.0,
+      "price": 800,
       "description": "Sofá reclinável em couro verde, muito confortável e em ótimo estado. Retirada em São Paulo.",
       "images": [
         {
@@ -275,7 +299,7 @@
         "phone": "(31) 99876-5432"
       },
       "title": "Mesa de Vidro para Computador",
-      "price": 400.0,
+      "price": 400,
       "description": "Mesa com tampo de vidro temperado e estrutura metálica preta. Ótima condição, sem riscos.",
       "images": [
         {
@@ -303,7 +327,7 @@
         "phone": "(71) 98765-4321"
       },
       "title": "O Poder do Hábito - Charles Duhigg",
-      "price": 45.0,
+      "price": 45,
       "description": "Livro sobre como os hábitos funcionam e como mudá-los. Edição brasileira, excelente estado, sem marcações.",
       "images": [
         {
@@ -363,7 +387,7 @@
         "phone": "(71) 98765-4321"
       },
       "title": "Curso de Python - 4 volumes",
-      "price": 120.0,
+      "price": 120,
       "description": "Série completa de livros para aprender Python. Livro novo, nunca lido. Material de qualidade para iniciantes.",
       "images": [
         {
@@ -385,17 +409,8 @@
     {
       "id": "10",
       "userId": "1",
-      "user": {
-        "id": "1",
-        "name": "Administrador",
-        "email": "admin@venda.me",
-        "avatar": "https://i.pravatar.cc/150?img=1",
-        "state": "SP",
-        "city": "São Paulo",
-        "phone": "(11) 98765-4321"
-      },
       "title": "Bicicleta Mountain Bike Aro 29",
-      "price": 1200.0,
+      "price": 1200,
       "description": "Bicicleta Mountain Bike com suspensão dianteira, câmbio Shimano e freios a disco. Praticamente nova.",
       "images": [
         {
@@ -411,7 +426,7 @@
       "categoryId": "5",
       "condition": "novo",
       "shipping": false,
-      "createdAt": "2026-06-01T10:00:00",
+      "createdAt": "2026-06-11T22:41:24.680Z",
       "status": "available"
     },
     {
@@ -427,7 +442,7 @@
         "phone": "(11) 98765-4321"
       },
       "title": "Kit Completo de Musculação com Halteres",
-      "price": 350.0,
+      "price": 350,
       "description": "Kit com halteres ajustáveis de 1kg a 15kg. Perfeito para exercitação em casa, completo e bem conservado.",
       "images": [
         {
@@ -459,7 +474,7 @@
         "phone": "(11) 99876-5432"
       },
       "title": "Lustre de Cristal Moderno",
-      "price": 280.0,
+      "price": 280,
       "description": "Lustre elegante de cristal com 3 lâmpadas LED. Novo na caixa, nunca foi instalado. Iluminação perfeita.",
       "images": [
         {
@@ -491,7 +506,7 @@
         "phone": "(21) 98765-4321"
       },
       "title": "Tapete Persa 2m x 3m",
-      "price": 600.0,
+      "price": 600,
       "description": "Tapete persa autêntico em perfeito estado. Padrão tradicional e cores vibrantes. Peça original.",
       "images": [
         {
@@ -527,7 +542,7 @@
         "phone": "(31) 99876-5432"
       },
       "title": "Kit Skincare Completo Premium",
-      "price": 200.0,
+      "price": 200,
       "description": "Kit com limpador, sérum, creme e protetor solar. Produtos importados de qualidade profissional.",
       "images": [
         {
@@ -563,7 +578,7 @@
         "phone": "(71) 98765-4321"
       },
       "title": "Perfume Importado 100ml",
-      "price": 180.0,
+      "price": 180,
       "description": "Perfume francês original 100ml. Aroma sofisticado e longa duração. Novo e lacrado.",
       "images": [
         {
@@ -595,7 +610,7 @@
         "phone": "(11) 98765-4321"
       },
       "title": "Jogo de Tabuleiro Catan",
-      "price": 120.0,
+      "price": 120,
       "description": "Jogo de estratégia Catan completo com todas as peças. Pouco jogado, praticamente novo. Muito divertido!",
       "images": [
         {
@@ -614,5 +629,6 @@
       "createdAt": "2026-06-05T15:25:00",
       "status": "available"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

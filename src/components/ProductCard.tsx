@@ -50,7 +50,7 @@ export default function ProductCard({
     <div className="flex flex-col justify-between shadow-md rounded-lg p-3 bg-white relative">
       {isMyProduct && (
         <Dropdown align="right">
-          <DropdownButton className="absolute -top-2 -right-2 z-50">
+          <DropdownButton className="absolute -top-2 -right-2 z-30">
             <FiMoreVertical className="text-2xl bg-primary-lighter light p-0.5 rounded-2xl text-gray-500 cursor-pointer" />
           </DropdownButton>
 
