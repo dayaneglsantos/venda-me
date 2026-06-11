@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@layer base {
+  /* Remove as setas no Chrome, Safari, Edge e Opera */
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Remove as setas no Firefox */
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+}
+
+@theme {
+  --color-primary: #ee8128;
+  --color-primary-light: #f4af76;
+  --color-primary-lighter: #f9d8c9;
+  --color-primary-dark: #c46210;
+
+  --error: #ff3333;
+}
+
+@keyframes loader {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(400%);
+  }
+}
+
+.animate-loader {
+  animation: loader 1.2s linear infinite;
+}
+
+/* Esconde scrollbar da tira de thumbnails */
+.thumbs-strip::-webkit-scrollbar {
+  display: none;
+}
