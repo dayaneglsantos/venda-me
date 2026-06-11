@@ -7,6 +7,7 @@ interface SelectInputProps {
   value: string | number;
   onChange: (value: any) => void;
   className?: string;
+  error?: string;
 }
 
 export default function SelectInput({
@@ -16,6 +17,7 @@ export default function SelectInput({
   value,
   onChange,
   className,
+  error,
 }: SelectInputProps) {
   return (
     <div className={`w-ful min-w-20 mt-2 ${className || ""}`}>
@@ -43,6 +45,7 @@ export default function SelectInput({
         </select>
         <FiChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
       </div>
+      {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
     </div>
   );
 }

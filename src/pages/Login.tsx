@@ -1,5 +1,7 @@
 import Button from "../components/Button";
 import { FormField } from "../components/FormField";
+import Modal from "../components/Modal";
+import UserForm from "../components/UserForm";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as zod from "zod";
@@ -7,12 +9,13 @@ import { useAuthStore } from "../store/authStore";
 import { login as loginService } from "../services/login";
 import toast from "react-hot-toast";
 import logo from "../assets/logo.png";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const { login, isLogged } = useAuthStore();
   const navigate = useNavigate();
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
 
   const loginSchema = zod.object({
     email: zod.string().email("E-mail inválido"),
@@ -92,7 +95,25 @@ export default function Login() {
         >
           Entrar
         </Button>
+        <p className="text-sm text-gray-500 mb-2">
+          Não tem uma conta?{" "}
+          <button
+            type="button"
+            onClick={() => setIsRegisterOpen(true)}
+            className="text-primary hover:text-primary-dark underline font-medium cursor-pointer"
+          >
+            Cadastre-se
+          </button>
+        </p>
       </form>
+
+      <Modal
+        isOpen={isRegisterOpen}
+        onClose={() => setIsRegisterOpen(false)}
+        title="Criar conta"
+      >
+        <UserForm mode="create" onSuccess={() => setIsRegisterOpen(false)} />
+      </Modal>
     </div>
   );
 }

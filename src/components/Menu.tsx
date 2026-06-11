@@ -6,7 +6,6 @@ import {
   FiLogIn,
   FiLogOut,
   FiPlus,
-  FiUser,
   FiMenu,
   FiX,
   FiSettings,
@@ -19,10 +18,14 @@ import Dropdown, {
   DropdownHeader,
   DropdownItem,
 } from "./Dropdown";
+import Avatar from "./Avatar";
+import Modal from "./Modal";
+import UserForm from "./UserForm";
 
 export default function Menu() {
   const { logout, user } = useAuthStore();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -98,10 +101,8 @@ export default function Menu() {
                 </li>
                 <li>
                   <Dropdown align="right">
-                    <DropdownButton>
-                      <div className="flex items-center justify-center p-2 rounded-full hover:bg-orange-300 transition-colors duration-200 focus:outline-none">
-                        <FiUser className="text-primary-dark" size={24} />
-                      </div>
+                    <DropdownButton className="rounded-full hover:ring-1 hover:ring-primary transition-all duration-200 focus:outline-none">
+                      <Avatar src={user?.avatar} alt={user?.name} size="sm" />
                     </DropdownButton>
 
                     <DropdownContent>
@@ -111,7 +112,7 @@ export default function Menu() {
                         </p>
                       </DropdownHeader>
 
-                      <DropdownItem onClick={() => {}}>
+                      <DropdownItem onClick={() => setIsSettingsOpen(true)}>
                         <FiSettings size={16} />
                         Configurações
                       </DropdownItem>
@@ -142,6 +143,20 @@ export default function Menu() {
         </div>
       </div>
 
+      {user && (
+        <Modal
+          isOpen={isSettingsOpen}
+          onClose={() => setIsSettingsOpen(false)}
+          title="Editar dados"
+        >
+          <UserForm
+            mode="edit"
+            user={user}
+            onSuccess={() => setIsSettingsOpen(false)}
+          />
+        </Modal>
+      )}
+
       {/* Menu Mobile */}
       {isMenuOpen && (
         <div className="md:hidden absolute top-full left-0 w-full bg-orange-100 shadow-lg p-4 flex flex-col gap-4 z-40 border-t border-orange-300">
@@ -168,6 +183,19 @@ export default function Menu() {
                     className="w-full justify-between"
                   >
                     Novo anúncio
+                  </Button>
+                </li>
+                <li>
+                  <Button
+                    variant="outline"
+                    startIcon={<FiSettings />}
+                    onClick={() => {
+                      setIsSettingsOpen(true);
+                      setIsMenuOpen(false);
+                    }}
+                    className="w-full justify-between"
+                  >
+                    Configurações
                   </Button>
                 </li>
                 <li>

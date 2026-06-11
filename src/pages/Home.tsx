@@ -146,7 +146,7 @@ export default function Home() {
 
   return (
     <div className="p-6 pt-3 max-w-7xl mx-auto w-full flex flex-col flex-1">
-      <div className="flex gap-3 mb-6 items-center">
+      <div className="flex md:flex-row flex-col flex-wrap gap-1 md:gap-3 mb-6 items-center">
         <FormField
           label="Pesquisar por título"
           onChange={(value) => {
@@ -163,7 +163,7 @@ export default function Home() {
           onChange={(value) => {
             setFilters((prev) => ({ ...prev, state: value }));
           }}
-          className="w-48"
+          className="md:w-48 w-full"
         />
         <SelectInput
           options={categoriesOptions}
@@ -172,12 +172,12 @@ export default function Home() {
           onChange={(value) => {
             setFilters((prev) => ({ ...prev, category: value }));
           }}
-          className="w-48"
+          className="md:w-48 w-full"
         />
         <Button
           size="sm"
           variant="outline"
-          className="mt-7"
+          className="md:mt-7 mt-3 w-full md:w-auto"
           onClick={() => {
             setSearchTerm("");
             setFilters({
