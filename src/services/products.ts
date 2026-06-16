@@ -13,7 +13,7 @@ interface ProductFilters {
 
 export const getProduct = async (id: string) => {
   try {
-    const { data } = await api.get(`/products/${id}?_embed=user`);
+    const { data } = await api.get(`/products/${id}`);
     return { data };
   } catch (error) {
     console.error(error);
@@ -27,41 +27,15 @@ export const productsList = async (filters: ProductFilters) => {
   const { user } = useAuthStore.getState();
 
   try {
-    const params: any = {
-      _page: filters.pageNumber,
-      _per_page: filters.pageSize,
-      _sort: "-createdAt",
-      _embed: "user",
+    const params: Record<string, string | number> = {
+      page: filters.pageNumber,
+      perPage: filters.pageSize,
     };
 
-    const where: Record<string, any> = {};
-
-    //produtos que não são do usuário logado
-    where.userId = {
-      ne: user?.id,
-    };
-
-    if (filters.category) {
-      where.categoryId = {
-        eq: filters.category,
-      };
-    }
-
-    if (filters.state) {
-      where.user = {
-        state: {
-          eq: filters.state,
-        },
-      };
-    }
-
-    if (filters.search) {
-      where.title = {
-        contains: filters.search,
-      };
-    }
-
-    params._where = JSON.stringify(where);
+    if (user?.id) params.excludeUserId = user.id;
+    if (filters.category) params.categoryId = filters.category;
+    if (filters.state) params.state = filters.state;
+    if (filters.search) params.search = filters.search;
 
     const { data } = await api.get("/products", { params });
 
@@ -87,37 +61,15 @@ export const myProductsList = async (filters: ProductFilters) => {
   const { user } = useAuthStore.getState();
 
   try {
-    const params: any = {
-      _page: filters.pageNumber,
-      _per_page: filters.pageSize,
-      _sort: "-createdAt",
-      _embed: "user",
+    const params: Record<string, string | number> = {
+      page: filters.pageNumber,
+      perPage: filters.pageSize,
     };
 
-    const where: Record<string, any> = {};
-
-    where.userId = {
-      eq: user?.id,
-    };
-
-    if (filters.category) {
-      where.categoryId = {
-        eq: filters.category,
-      };
-    }
-    if (filters.status) {
-      where.status = {
-        eq: filters.status,
-      };
-    }
-
-    if (filters.search) {
-      where.title = {
-        contains: filters.search,
-      };
-    }
-
-    params._where = JSON.stringify(where);
+    if (user?.id) params.userId = user.id;
+    if (filters.category) params.categoryId = filters.category;
+    if (filters.status) params.status = filters.status;
+    if (filters.search) params.search = filters.search;
 
     const { data } = await api.get("/products", { params });
 
@@ -153,28 +105,11 @@ export const createProduct = async (productData: any) => {
 
 export const myProductsMeta = async (user: UserType) => {
   try {
-    const { data } = await api.get(
-      `/products?_where=${JSON.stringify({
-        userId: {
-          eq: user.id,
-        },
-      })}`,
-    );
+    const { data } = await api.get("/products/meta", {
+      params: { userId: user.id },
+    });
 
-    const totalProducts = data.length;
-    const soldProducts = data.filter(
-      (product: any) => product.status === "sold",
-    ).length;
-    const pausedProducts = data.filter(
-      (product: any) => product.status === "paused",
-    ).length;
-    const activeProducts = data.filter(
-      (product: any) => product.status === "available",
-    ).length;
-
-    return {
-      data: { totalProducts, soldProducts, pausedProducts, activeProducts },
-    };
+    return { data };
   } catch (error) {
     console.error(error);
     return {

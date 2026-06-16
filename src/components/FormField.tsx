@@ -7,6 +7,7 @@ interface FormFieldProps {
   type?: string;
   value: string;
   onChange: (value: string) => void;
+  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
   placeholder?: string;
   error?: string;
   endIcon?: React.ReactNode;
@@ -21,6 +22,7 @@ export function FormField({
   type = "text",
   value,
   onChange,
+  onFocus,
   placeholder,
   error,
   endIcon,
@@ -70,6 +72,7 @@ export function FormField({
             unmask={true}
             placeholder={placeholder}
             disabled={disabled}
+            onFocus={onFocus}
             onAccept={(value) => {
               if (maskOptions?.mask === Number) {
                 onChange(String(Number(value)));
@@ -87,6 +90,7 @@ export function FormField({
             onChange={(e) => onChange(e.target.value)}
             placeholder={placeholder}
             onWheel={handleWheel}
+            onFocus={onFocus}
             disabled={disabled}
             className={inputClassName}
           />

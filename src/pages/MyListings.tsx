@@ -81,21 +81,21 @@ export default function MyListings() {
 
   const getMyProductsMeta = async () => {
     if (!user) return;
-    setIsLoading(true);
     try {
       const { data } = await myProductsMeta(user);
       setKpiData(data);
     } catch (error) {
       toast.error("Ocorreu um erro ao carregar os produtos");
-    } finally {
-      setIsLoading(false);
     }
   };
 
-  // debounced search
+  // debounced search — retorna prev quando o valor não mudou para evitar re-render desnecessário
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
-      setFilters((prev) => ({ ...prev, search: searchTerm }));
+      setFilters((prev) => {
+        if (prev.search === searchTerm) return prev;
+        return { ...prev, search: searchTerm, pageNumber: 1 };
+      });
     }, 500);
 
     return () => clearTimeout(delayDebounceFn);
