@@ -22,16 +22,12 @@ interface UpdateUserData {
 
 export const createUser = async (data: CreateUserData) => {
   try {
-    const { data: existing } = await api.get("/users", {
-      params: { email: data.email },
-    });
-    if (existing.length > 0) {
-      return { error: "E-mail já cadastrado." };
-    }
     const response = await api.post("/users", data);
     return { data: response.data as UserType };
-  } catch {
-    return { error: "Ocorreu um erro ao criar o cadastro." };
+  } catch (error: any) {
+    return {
+      error: error.response?.data?.error ?? "Ocorreu um erro ao criar o cadastro.",
+    };
   }
 };
 

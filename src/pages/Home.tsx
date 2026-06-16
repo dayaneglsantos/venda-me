@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import Button from "../components/Button";
 import { FormField } from "../components/FormField";
 import KpiCard from "../components/KpiCard";
@@ -13,9 +14,10 @@ import Loader from "../components/Loader";
 
 export default function Home() {
   const { user } = useAuthStore();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [filters, setFilters] = useState({
-    pageNumber: 1,
+    pageNumber: Number(searchParams.get("page")) || 1,
     pageSize: 9,
     search: "",
     state: "",
@@ -57,25 +59,40 @@ export default function Home() {
 
   const getMyProductsMeta = async () => {
     if (!user) return;
-    setIsLoading(true);
     try {
       const { data } = await myProductsMeta(user);
       setKpiData(data);
     } catch (error) {
       toast.error("Ocorreu um erro ao carregar os produtos");
-    } finally {
-      setIsLoading(false);
     }
   };
 
-  // debounced search
+  // debounced search — retorna prev quando o valor não mudou para evitar re-render desnecessário
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
-      setFilters((prev) => ({ ...prev, search: searchTerm }));
+      setFilters((prev) => {
+        if (prev.search === searchTerm) return prev;
+        return { ...prev, search: searchTerm, pageNumber: 1 };
+      });
     }, 500);
 
     return () => clearTimeout(delayDebounceFn);
   }, [searchTerm]);
+
+  // sincroniza pageNumber na URL para que o botão Voltar preserve a página
+  useEffect(() => {
+    setSearchParams(
+      (prev) => {
+        if (filters.pageNumber > 1) {
+          prev.set("page", String(filters.pageNumber));
+        } else {
+          prev.delete("page");
+        }
+        return prev;
+      },
+      { replace: true },
+    );
+  }, [filters.pageNumber]);
 
   useEffect(() => {
     getCategories();
@@ -187,6 +204,7 @@ export default function Home() {
               state: "",
               category: "",
             });
+            setSearchParams({}, { replace: true });
           }}
         >
           Limpar Filtros

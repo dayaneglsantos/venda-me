@@ -95,24 +95,7 @@ export default function ProductForm() {
 
     try {
       const compressedBase64 = await compressImage(file);
-
-      const PAYLOAD_LIMIT = 102400; // 102400 = limite do json-server;
-      const METADATA_OVERHEAD = 2000; // Estimativa de overhead (JSON, chaves, etc) para cada imagem
       const currentImages = formValues.images || [];
-      const existingImagesSize = currentImages.reduce(
-        (sum, img) => sum + img.url.length,
-        0,
-      );
-
-      if (
-        existingImagesSize + compressedBase64.length + METADATA_OVERHEAD >
-        PAYLOAD_LIMIT
-      ) {
-        toast.error(
-          `A imagem é grande demais (${Math.round(compressedBase64.length / 1024)} KB). Use uma imagem menor ou remova outras antes de adicionar.`,
-        );
-        return;
-      }
 
       setValue(
         "images",
@@ -245,6 +228,7 @@ export default function ProductForm() {
             onChange={(value) => {
               setValue("price", Number(value));
             }}
+            onFocus={!product ? (e) => e.target.select() : undefined}
             maskOptions={{
               mask: Number,
               scale: 2,
