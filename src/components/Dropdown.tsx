@@ -80,7 +80,7 @@ export function DropdownButton({ children, className }: DropdownButtonProps) {
   return (
     <div
       onClick={() => setIsOpen(!isOpen)}
-      className={`cursor-pointer ${className}`}
+      className={`cursor-pointer rounded-full transition-colors duration-200 hover:bg-gray-100 active:scale-95 ${className}`}
     >
       {children}
     </div>
@@ -101,7 +101,7 @@ export function DropdownContent({ children }: DropdownContentProps) {
 
   return (
     <div
-      className={`absolute ${alignmentClass} top-full mt-2 bg-white rounded-lg shadow-xl border border-gray-100 z-50 animate-in fade-in slide-in-from-top-1 duration-200 w-fit`}
+      className={`absolute ${alignmentClass} top-full mt-2 bg-white rounded-xl shadow-lg border border-gray-100 z-50 animate-in fade-in slide-in-from-top-1 duration-200 w-fit overflow-hidden`}
     >
       {children}
     </div>
@@ -136,7 +136,7 @@ export function DropdownItem({
   const { setIsOpen } = useDropdownContext();
 
   const baseClasses =
-    "w-full flex items-center gap-2 px-3 py-2 text-sm rounded-md transition-colors text-left cursor-pointer";
+    "w-full flex items-center gap-2 px-3 py-2 text-sm rounded-lg transition-colors duration-150 text-left cursor-pointer";
 
   const variantClasses = {
     default: "text-gray-600 hover:bg-gray-100",

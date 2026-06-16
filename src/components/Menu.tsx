@@ -22,6 +22,34 @@ import Avatar from "./Avatar";
 import Modal from "./Modal";
 import UserForm from "./UserForm";
 
+interface NavLinkButtonProps {
+  onClick: () => void;
+  startIcon?: React.ReactNode;
+  endIcon?: React.ReactNode;
+  children: React.ReactNode;
+  className?: string;
+}
+
+function NavLinkButton({
+  onClick,
+  startIcon,
+  endIcon,
+  children,
+  className,
+}: NavLinkButtonProps) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`flex items-center gap-2 text-gray-700 font-medium hover:text-primary-dark transition-colors duration-200 cursor-pointer ${className || ""}`}
+    >
+      {startIcon}
+      <span>{children}</span>
+      {endIcon}
+    </button>
+  );
+}
+
 export default function Menu() {
   const { logout, user } = useAuthStore();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -51,17 +79,15 @@ export default function Menu() {
             {isMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
           </button>
         ) : (
-          <Button
-            variant="outline"
+          <NavLinkButton
             endIcon={<FiLogIn />}
             onClick={() => {
               window.location.href = "/login";
             }}
-            size="sm"
             className="md:hidden"
           >
             Login
-          </Button>
+          </NavLinkButton>
         )}
 
         {/* Menu Desktop */}
@@ -70,24 +96,17 @@ export default function Menu() {
             {user ? (
               <>
                 <li>
-                  <Button
-                    variant="outline"
-                    startIcon={<FiHome />}
-                    size="sm"
-                    onClick={() => navigate("/")}
-                  >
+                  <NavLinkButton startIcon={<FiHome />} onClick={() => navigate("/")}>
                     Início
-                  </Button>
+                  </NavLinkButton>
                 </li>
                 <li>
-                  <Button
-                    variant="outline"
+                  <NavLinkButton
                     startIcon={<FiList />}
-                    size="sm"
                     onClick={() => navigate("/meus-anuncios")}
                   >
                     Meus anúncios
-                  </Button>
+                  </NavLinkButton>
                 </li>
                 <li>
                   <Button
@@ -127,16 +146,14 @@ export default function Menu() {
               </>
             ) : (
               <li>
-                <Button
-                  variant="outline"
+                <NavLinkButton
                   endIcon={<FiLogIn />}
                   onClick={() => {
                     window.location.href = "/login";
                   }}
-                  size="sm"
                 >
                   Login
-                </Button>
+                </NavLinkButton>
               </li>
             )}
           </ul>
@@ -164,14 +181,28 @@ export default function Menu() {
             {user && (
               <>
                 <li>
-                  <Button variant="outline" className="w-full justify-between">
+                  <NavLinkButton
+                    startIcon={<FiHome />}
+                    onClick={() => {
+                      navigate("/");
+                      setIsMenuOpen(false);
+                    }}
+                    className="w-full"
+                  >
                     Início
-                  </Button>
+                  </NavLinkButton>
                 </li>
                 <li>
-                  <Button variant="outline" className="w-full justify-between">
+                  <NavLinkButton
+                    startIcon={<FiList />}
+                    onClick={() => {
+                      navigate("/meus-anuncios");
+                      setIsMenuOpen(false);
+                    }}
+                    className="w-full"
+                  >
                     Meus anúncios
-                  </Button>
+                  </NavLinkButton>
                 </li>
                 <li>
                   <Button
@@ -186,27 +217,25 @@ export default function Menu() {
                   </Button>
                 </li>
                 <li>
-                  <Button
-                    variant="outline"
+                  <NavLinkButton
                     startIcon={<FiSettings />}
                     onClick={() => {
                       setIsSettingsOpen(true);
                       setIsMenuOpen(false);
                     }}
-                    className="w-full justify-between"
+                    className="w-full"
                   >
                     Configurações
-                  </Button>
+                  </NavLinkButton>
                 </li>
                 <li>
-                  <Button
-                    variant="outline"
+                  <NavLinkButton
                     endIcon={<FiLogOut />}
                     onClick={handleLogout}
-                    className="w-full justify-between text-red-600 border-red-500"
+                    className="w-full text-red-600"
                   >
                     Sair
-                  </Button>
+                  </NavLinkButton>
                 </li>
               </>
             )}
