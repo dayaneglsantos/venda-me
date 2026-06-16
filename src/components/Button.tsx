@@ -23,15 +23,16 @@ export default function Button({
   ...props
 }: ButtonProps) {
   const variantClasses = {
-    default: "bg-gray-300 text-gray-700 hover:bg-gray-400",
+    default: "bg-gray-100 text-gray-600 hover:bg-gray-200 hover:shadow-sm",
     outline:
-      "bg-transparent border border-primary text-primary-dark hover:bg-primary hover:text-primary-lighter",
-    primary: "bg-primary text-white hover:bg-primary-dark",
-    secondary: "bg-secondary text-white hover:bg-secondary-dark",
+      "bg-transparent border border-primary/60 text-primary-dark hover:bg-primary/10 hover:border-primary",
+    primary: "bg-primary text-white hover:bg-primary-dark hover:shadow-md",
+    secondary:
+      "bg-secondary text-white hover:bg-secondary-dark hover:shadow-md",
   };
 
   const sizeClasses = {
-    sm: "text-sm px-3 py-1",
+    sm: "text-sm px-3 py-1.5",
     md: "text-base px-4 py-2",
     lg: "text-lg px-6 py-3",
   };
@@ -40,7 +41,7 @@ export default function Button({
     <button
       type={type}
       onClick={onClick}
-      className={`flex items-center gap-1 whitespace-nowrap font-semibold ${sizeClasses[size]} rounded-2xl transition-colors duration-300 ${variantClasses[variant]} ${disabled ? "opacity-50 cursor-default" : "cursor-pointer"} ${className || ""}`}
+      className={`flex items-center gap-1 whitespace-nowrap font-medium ${sizeClasses[size]} rounded-full transition-all duration-200 active:scale-95 ${variantClasses[variant]} ${disabled ? "opacity-50 cursor-default" : "cursor-pointer"} ${className || ""}`}
       disabled={disabled}
       {...props}
     >
