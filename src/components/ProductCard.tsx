@@ -24,11 +24,13 @@ import { useState } from "react";
 interface ProductCardProps {
   product: ProductType;
   handleDelete?: (id: string) => void;
+  onStatusChange?: () => void;
 }
 
 export default function ProductCard({
   product: receivedProduct,
   handleDelete,
+  onStatusChange,
 }: ProductCardProps) {
   const navigate = useNavigate();
   const { user } = useAuthStore();
@@ -41,6 +43,7 @@ export default function ProductCard({
       const { data } = await updateProduct(product.id, { ...product, status });
       toast.success("Status do produto atualizado com sucesso");
       setProduct(data);
+      onStatusChange?.();
     } catch (error) {
       toast.error("Ocorreu um erro ao alterar o status do produto");
     }
